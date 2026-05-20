@@ -1,6 +1,6 @@
 "use strict";
 
-const API_URL = "/api/agent";
+const API_URL = "https://rwkv.theglasshaus.org/prompt/complete";
 
 function getEl(id) {
   const el = document.getElementById(id);

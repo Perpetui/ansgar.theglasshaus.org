@@ -1,0 +1,67 @@
+---
+const title = "Ansgar Agent";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>{title}</h1>
+      <p>Prompt a remote agent</p>
+    </header>
+
+    <main>
+      <div class="input-group">
+        <label for="prompt">Prompt</label>
+        <textarea
+          id="prompt"
+          placeholder="Enter your prompt for the agent..."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <div class="input-group">
+        <div class="slider-group">
+          <label for="maxTokens">Max tokens</label>
+          <input
+            type="range"
+            id="maxTokens"
+            min="500"
+            max="5000"
+            step="100"
+            value="1000"
+          />
+          <span class="slider-value" id="maxTokensValue">1000</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="send" type="button">Send</button>
+      </div>
+
+      <div class="response-wrapper">
+        <div class="response-header">
+          <label>Response</label>
+          <div class="response-actions">
+            <span class="response-meta" id="responseMeta"></span>
+            <button id="copyBtn" type="button" class="copy-btn" title="Copy to clipboard">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span class="copy-label">Copied!</span>
+            </button>
+          </div>
+        </div>
+        <div id="response"></div>
+      </div>
+
+      <div class="status" id="status"></div>
+    </main>
+
+    <script src="/script.js" defer></script>
+  </body>
+</html>

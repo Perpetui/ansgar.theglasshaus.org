@@ -67,6 +67,17 @@ if (copyBtnEl && responseEl) {
   });
 }
 
+function countWords(text) {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function updateMeta(text) {
+  if (!responseMetaEl) return;
+  const chars = text.length;
+  const words = countWords(text);
+  responseMetaEl.textContent = `${chars} chars · ${words} words`;
+}
+
 async function sendPrompt() {
   if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
@@ -125,7 +136,8 @@ async function sendPrompt() {
           if (parsed && typeof parsed.chunk === "string") {
             output += parsed.chunk;
             responseEl.textContent = output;
-            responseMetaEl.textContent = `${output.length} chars`;
+            responseEl.scrollTop = responseEl.scrollHeight;
+            updateMeta(output);
           }
         } catch {
           // ignore malformed JSON lines
@@ -141,7 +153,8 @@ async function sendPrompt() {
         if (parsed && typeof parsed.chunk === "string") {
           output += parsed.chunk;
           responseEl.textContent = output;
-          responseMetaEl.textContent = `${output.length} chars`;
+          responseEl.scrollTop = responseEl.scrollHeight;
+          updateMeta(output);
         }
       } catch {
         // ignore malformed JSON

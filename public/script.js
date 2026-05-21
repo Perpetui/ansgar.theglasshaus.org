@@ -1,5 +1,7 @@
 "use strict";
 
+import { marked } from "./marked.js";
+
 const API_URL = "https://rwkv.theglasshaus.org/prompt/complete";
 
 function getEl(id) {
@@ -78,6 +80,16 @@ function updateMeta(text) {
   responseMetaEl.textContent = `${chars} chars · ${words} words`;
 }
 
+function renderOutput(text) {
+  if (!responseEl) return;
+  if (!text) {
+    responseEl.innerHTML = "";
+    return;
+  }
+  responseEl.innerHTML = marked.parse(text, { breaks: true });
+  responseEl.scrollTop = responseEl.scrollHeight;
+}
+
 async function sendPrompt() {
   if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
@@ -94,7 +106,7 @@ async function sendPrompt() {
   sendEl.disabled = true;
   statusEl.textContent = "Sending...";
   statusEl.className = "status sending";
-  responseEl.textContent = "";
+  responseEl.innerHTML = "";
   responseMetaEl.textContent = "";
 
   try {
@@ -135,8 +147,7 @@ async function sendPrompt() {
           const parsed = JSON.parse(trimmed);
           if (parsed && typeof parsed.chunk === "string") {
             output += parsed.chunk;
-            responseEl.textContent = output;
-            responseEl.scrollTop = responseEl.scrollHeight;
+            renderOutput(output);
             updateMeta(output);
           }
         } catch {
@@ -152,8 +163,7 @@ async function sendPrompt() {
         const parsed = JSON.parse(trimmed);
         if (parsed && typeof parsed.chunk === "string") {
           output += parsed.chunk;
-          responseEl.textContent = output;
-          responseEl.scrollTop = responseEl.scrollHeight;
+          renderOutput(output);
           updateMeta(output);
         }
       } catch {
@@ -164,7 +174,7 @@ async function sendPrompt() {
     statusEl.textContent = "Done";
     statusEl.className = "status";
   } catch (err) {
-    responseEl.textContent = "";
+    responseEl.innerHTML = "";
     statusEl.textContent = `Error: ${err.message}`;
     statusEl.className = "status error";
   } finally {

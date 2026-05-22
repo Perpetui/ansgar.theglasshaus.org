@@ -105,7 +105,18 @@ textarea#prompt:focus {
   min-width: 7rem;
 }
 
-input[type="range"]#maxTokens {
+.sliders {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.sliders .slider-group {
+  flex: 1;
+  min-width: 220px;
+}
+
+input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   flex: 1;
@@ -115,7 +126,7 @@ input[type="range"]#maxTokens {
   outline: none;
 }
 
-input[type="range"]#maxTokens::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 18px;
@@ -126,11 +137,11 @@ input[type="range"]#maxTokens::-webkit-slider-thumb {
   transition: background 0.15s ease;
 }
 
-input[type="range"]#maxTokens::-webkit-slider-thumb:hover {
+input[type="range"]::-webkit-slider-thumb:hover {
   background: var(--accent-hover);
 }
 
-input[type="range"]#maxTokens::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -140,7 +151,7 @@ input[type="range"]#maxTokens::-moz-range-thumb {
   transition: background 0.15s ease;
 }
 
-input[type="range"]#maxTokens::-moz-range-thumb:hover {
+input[type="range"]::-moz-range-thumb:hover {
   background: var(--accent-hover);
 }
 

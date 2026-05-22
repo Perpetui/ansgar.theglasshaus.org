@@ -21,6 +21,10 @@ const maxTokensEl = getEl("maxTokens");
 const maxTokensValueEl = getEl("maxTokensValue");
 const temperatureEl = getEl("temperature");
 const temperatureValueEl = getEl("temperatureValue");
+const topKEl = getEl("topK");
+const topKValueEl = getEl("topKValue");
+const topPEl = getEl("topP");
+const topPValueEl = getEl("topPValue");
 const copyBtnEl = getEl("copyBtn");
 
 if (maxTokensEl && maxTokensValueEl) {
@@ -32,6 +36,18 @@ if (maxTokensEl && maxTokensValueEl) {
 if (temperatureEl && temperatureValueEl) {
   temperatureEl.addEventListener("input", () => {
     temperatureValueEl.textContent = temperatureEl.value;
+  });
+}
+
+if (topKEl && topKValueEl) {
+  topKEl.addEventListener("input", () => {
+    topKValueEl.textContent = topKEl.value;
+  });
+}
+
+if (topPEl && topPValueEl) {
+  topPEl.addEventListener("input", () => {
+    topPValueEl.textContent = topPEl.value;
   });
 }
 
@@ -99,7 +115,7 @@ function renderOutput(text) {
 }
 
 async function sendPrompt() {
-  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl) {
+  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
     return;
   }
@@ -125,6 +141,8 @@ async function sendPrompt() {
         prompt,
         max_tokens: Number(maxTokensEl.value),
         temperature: Number(temperatureEl.value),
+        top_k: Number(topKEl.value),
+        top_p: Number(topPEl.value),
       }),
     });
 

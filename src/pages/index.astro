@@ -41,7 +41,7 @@ const title = "RWKV Agent Interface";
         </div>
       </div>
 
-      <div class="input-group">
+      <div class="input-group sliders">
         <div class="slider-group">
           <label for="temperature">Temperature</label>
           <input
@@ -53,6 +53,32 @@ const title = "RWKV Agent Interface";
             value="1.0"
           />
           <span class="slider-value" id="temperatureValue">1.0</span>
+        </div>
+
+        <div class="slider-group">
+          <label for="topK">Top K</label>
+          <input
+            type="range"
+            id="topK"
+            min="10"
+            max="50"
+            step="1"
+            value="40"
+          />
+          <span class="slider-value" id="topKValue">40</span>
+        </div>
+
+        <div class="slider-group">
+          <label for="topP">Top P</label>
+          <input
+            type="range"
+            id="topP"
+            min="0.1"
+            max="1.0"
+            step="0.1"
+            value="0.9"
+          />
+          <span class="slider-value" id="topPValue">0.9</span>
         </div>
       </div>
 

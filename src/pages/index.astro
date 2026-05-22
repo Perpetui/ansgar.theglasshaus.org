@@ -80,6 +80,32 @@ const title = "RWKV Agent Interface";
           />
           <span class="slider-value" id="topPValue">0.9</span>
         </div>
+
+        <div class="slider-group">
+          <label for="presencePenalty">Presence Pen.</label>
+          <input
+            type="range"
+            id="presencePenalty"
+            min="0.1"
+            max="1.0"
+            step="0.1"
+            value="0.2"
+          />
+          <span class="slider-value" id="presencePenaltyValue">0.2</span>
+        </div>
+
+        <div class="slider-group">
+          <label for="frequencyPenalty">Frequency Pen.</label>
+          <input
+            type="range"
+            id="frequencyPenalty"
+            min="0.1"
+            max="1.0"
+            step="0.1"
+            value="0.2"
+          />
+          <span class="slider-value" id="frequencyPenaltyValue">0.2</span>
+        </div>
       </div>
 
       <div class="actions">
@@ -101,6 +127,57 @@ const title = "RWKV Agent Interface";
       </div>
 
       <div class="status" id="status"></div>
+
+      <section class="settings-tables" id="settingsTables">
+        <h2>Parameter Combinations for Different Tasks</h2>
+        <p class="settings-intro">Suggested decoding parameters from <a href="https://wiki.rwkv.com/basic/decoding-parameters.html#parameter-combinations-for-different-tasks" target="_blank" rel="noopener noreferrer">RWKV Wiki</a>.</p>
+
+        <div class="tabs" id="paramTabs">
+          <div class="tab-nav" role="tablist">
+            <button type="button" class="tab-btn active" data-tab="creative" role="tab" aria-selected="true">Creative Content Creation</button>
+            <button type="button" class="tab-btn" data-tab="structured" role="tab" aria-selected="false">Structured Writing</button>
+            <button type="button" class="tab-btn" data-tab="mechanical" role="tab" aria-selected="false">Mechanical Tasks</button>
+          </div>
+
+          <div class="tab-panel active" id="tab-creative" role="tabpanel" aria-expanded="true">
+            <p class="tab-desc">Creative content needs more randomness and openness to let the model generate more imaginative expressions. Therefore, use higher <code>Top_P</code> and <code>Temperature</code> with moderate <code>Presence Penalty</code> and <code>Frequency Penalty</code> values to avoid excessive repetition.</p>
+            <table><thead><tr><th>Task Type</th><th><code>Top_P</code></th><th><code>Temperature</code></th><th><code>Presence Penalty</code></th><th><code>Frequency Penalty</code></th></tr></thead><tbody><tr><td>Story Creation</td><td>0.8</td><td>1.3</td><td>0.4</td><td>0.5</td></tr><tr><td>Poetry / Literature</td><td>0.9</td><td>1.8</td><td>0.3</td><td>0.4</td></tr><tr><td>Advertising Copy / Marketing</td><td>0.7</td><td>1.2</td><td>0.5</td><td>0.6</td></tr><tr><td>Free Writing</td><td>0.85</td><td>1.5</td><td>0.4</td><td>0.5</td></tr></tbody></table>
+          </div>
+
+          <div class="tab-panel" id="tab-structured" role="tabpanel" aria-expanded="false">
+            <p class="tab-desc">Structured writing requires some creativity but also logic and coherence. Use moderate <code>Top_P</code> and <code>Temperature</code> with appropriate <code>Presence Penalty</code> and <code>Frequency Penalty</code> to reduce repetition.</p>
+            <table><thead><tr><th>Task Type</th><th><code>Top_P</code></th><th><code>Temperature</code></th><th><code>Presence Penalty</code></th><th><code>Frequency Penalty</code></th></tr></thead><tbody><tr><td>News / Articles</td><td>0.6</td><td>1.1</td><td>0.3</td><td>0.4</td></tr><tr><td>Papers / Research Reports</td><td>0.4</td><td>0.9</td><td>0.4</td><td>0.5</td></tr><tr><td>Scripts / Dialogues</td><td>0.7</td><td>1.3</td><td>0.5</td><td>0.6</td></tr><tr><td>Product Descriptions</td><td>0.5</td><td>1.0</td><td>0.3</td><td>0.4</td></tr></tbody></table>
+          </div>
+
+          <div class="tab-panel" id="tab-mechanical" role="tabpanel" aria-expanded="false">
+            <p class="tab-desc">Mechanical tasks require precision and consistency, often following specific format. Use lower <code>Temperature</code> and <code>Top_P</code> with reduced <code>Presence Penalty</code> and <code>Frequency Penalty</code> to avoid affecting the use of common words.</p>
+            <table><thead><tr><th>Task Type</th><th><code>Top_P</code></th><th><code>Temperature</code></th><th><code>Presence Penalty</code></th><th><code>Frequency Penalty</code></th></tr></thead><tbody><tr><td>Q&amp;A / Factual Answers</td><td>0.2</td><td>0.8</td><td>0.1</td><td>0.2</td></tr><tr><td>Summarization / Paraphrasing</td><td>0.3</td><td>1.0</td><td>0.2</td><td>0.3</td></tr><tr><td>Translation</td><td>0.3</td><td>0.9</td><td>0.2</td><td>0.3</td></tr><tr><td>Formula / Code Generation</td><td>0.1</td><td>0.7</td><td>0.1</td><td>0.2</td></tr><tr><td>Multiple-choice Questions, True or False Questions</td><td>0</td><td>0.7</td><td>0.1</td><td>0.2</td></tr></tbody></table>
+          </div>
+        </div>
+
+        <div class="param-explanations">
+          <h3>Parameter Explanations</h3>
+          <dl>
+            <dt><code>Temperature</code></dt>
+            <dd>Adjusts the randomness of the generated result by modifying the scaling ratio of the logits. A lower temperature makes the model choose highly probable tokens, creating more predictable output, while a higher temperature flattens the probability distribution, generating more creative but potentially less coherent text.</dd>
+
+            <dt><code>Top_P</code></dt>
+            <dd>Selects the top N tokens whose cumulative probability reaches the value of P as the candidate set. For example, if set to 0.1, only the top 10% of tokens will be considered. Lower values produce higher quality but more conservative content. Setting it to 1 decreases content quality but increases diversity.</dd>
+
+            <dt><code>Top_K</code></dt>
+            <dd>Limits the candidate tokens to the K most probable ones at each step. A lower Top_K makes output more focused and deterministic, while a higher Top_K allows more variety.</dd>
+
+            <dt><code>Presence Penalty</code></dt>
+            <dd>Applies a fixed penalty to any token that has already appeared, encouraging the model to use new vocabulary rather than repeating words. It functions like a dynamic blacklist of prohibited words.</dd>
+
+            <dt><code>Frequency Penalty</code></dt>
+            <dd>Penalizes tokens based on how many times they have already appeared, with the penalty increasing with each occurrence. This helps prevent repetitive phrases and filler words.</dd>
+
+            <dt><code>Penalty Decay</code></dt>
+            <dd>Controls the decay rate of Presence Penalty and Frequency Penalty. The closer the value is to 1, the slower the penalty decays; the smaller the value, the faster the decay.</dd>
+          </dl>
+        </div>
+      </section>
     </main>
 
     <script type="module" src="/script.js"></script>

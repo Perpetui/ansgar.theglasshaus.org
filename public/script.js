@@ -25,6 +25,10 @@ const topKEl = getEl("topK");
 const topKValueEl = getEl("topKValue");
 const topPEl = getEl("topP");
 const topPValueEl = getEl("topPValue");
+const presencePenaltyEl = getEl("presencePenalty");
+const presencePenaltyValueEl = getEl("presencePenaltyValue");
+const frequencyPenaltyEl = getEl("frequencyPenalty");
+const frequencyPenaltyValueEl = getEl("frequencyPenaltyValue");
 const copyBtnEl = getEl("copyBtn");
 
 if (maxTokensEl && maxTokensValueEl) {
@@ -48,6 +52,18 @@ if (topKEl && topKValueEl) {
 if (topPEl && topPValueEl) {
   topPEl.addEventListener("input", () => {
     topPValueEl.textContent = topPEl.value;
+  });
+}
+
+if (presencePenaltyEl && presencePenaltyValueEl) {
+  presencePenaltyEl.addEventListener("input", () => {
+    presencePenaltyValueEl.textContent = presencePenaltyEl.value;
+  });
+}
+
+if (frequencyPenaltyEl && frequencyPenaltyValueEl) {
+  frequencyPenaltyEl.addEventListener("input", () => {
+    frequencyPenaltyValueEl.textContent = frequencyPenaltyEl.value;
   });
 }
 
@@ -115,7 +131,7 @@ function renderOutput(text) {
 }
 
 async function sendPrompt() {
-  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl) {
+  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl || !presencePenaltyEl || !frequencyPenaltyEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
     return;
   }
@@ -143,6 +159,8 @@ async function sendPrompt() {
         temperature: Number(temperatureEl.value),
         top_k: Number(topKEl.value),
         top_p: Number(topPEl.value),
+        alpha_presence: Number(presencePenaltyEl.value),
+        alpha_frequency: Number(frequencyPenaltyEl.value),
       }),
     });
 
@@ -218,3 +236,30 @@ if (sendEl && promptEl) {
     }
   });
 }
+
+/* Tab control for settings tables */
+const tabBtns = document.querySelectorAll(".tab-btn");
+const tabPanels = document.querySelectorAll(".tab-panel");
+
+tabBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-tab");
+
+    tabBtns.forEach((b) => {
+      b.classList.remove("active");
+      b.setAttribute("aria-selected", "false");
+    });
+    tabPanels.forEach((p) => {
+      p.classList.remove("active");
+      p.setAttribute("aria-expanded", "false");
+    });
+
+    btn.classList.add("active");
+    btn.setAttribute("aria-selected", "true");
+    const panel = document.getElementById(`tab-${target}`);
+    if (panel) {
+      panel.classList.add("active");
+      panel.setAttribute("aria-expanded", "true");
+    }
+  });
+});

@@ -35,7 +35,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 4rem;
 }
 
 header {
@@ -61,6 +61,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding-bottom: 4rem;
 }
 
 .input-group {
@@ -432,6 +433,167 @@ button#send:disabled {
   color: #ef4444;
 }
 
+/* Settings tables section */
+.settings-tables {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.settings-tables h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+
+.settings-intro {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.settings-intro a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.settings-intro a:hover {
+  text-decoration: underline;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  margin-bottom: -1px;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.tab-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Table styles for settings */
+.settings-tables table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.settings-tables th,
+.settings-tables td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.625rem;
+  text-align: left;
+}
+
+.settings-tables th {
+  background: var(--surface);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.settings-tables td {
+  color: var(--text);
+}
+
+.settings-tables tbody tr:nth-child(even) {
+  background: var(--surface);
+}
+
+.settings-tables code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.125rem 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+/* Parameter explanations */
+.param-explanations {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.param-explanations h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.param-explanations dl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.param-explanations dt {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.param-explanations dt code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.125rem 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.param-explanations dd {
+  margin-left: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
 @media (max-width: 600px) {
   body {
     padding: 1rem;
@@ -439,5 +601,18 @@ button#send:disabled {
 
   header h1 {
     font-size: 1.5rem;
+  }
+
+  .tab-nav {
+    flex-wrap: wrap;
+  }
+
+  .settings-tables table {
+    font-size: 0.75rem;
+  }
+
+  .settings-tables th,
+  .settings-tables td {
+    padding: 0.375rem 0.5rem;
   }
 }

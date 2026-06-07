@@ -155,6 +155,7 @@ async function sendPrompt() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         prompt,
+        model: "models/rwkv-10",
         max_tokens: Number(maxTokensEl.value),
         temperature: Number(temperatureEl.value),
         top_k: Number(topKEl.value),

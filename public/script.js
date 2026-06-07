@@ -30,6 +30,7 @@ const presencePenaltyValueEl = getEl("presencePenaltyValue");
 const frequencyPenaltyEl = getEl("frequencyPenalty");
 const frequencyPenaltyValueEl = getEl("frequencyPenaltyValue");
 const copyBtnEl = getEl("copyBtn");
+const modelEl = getEl("model");
 
 if (maxTokensEl && maxTokensValueEl) {
   maxTokensEl.addEventListener("input", () => {
@@ -131,7 +132,7 @@ function renderOutput(text) {
 }
 
 async function sendPrompt() {
-  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl || !presencePenaltyEl || !frequencyPenaltyEl) {
+  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl || !presencePenaltyEl || !frequencyPenaltyEl || !modelEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
     return;
   }
@@ -155,7 +156,7 @@ async function sendPrompt() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         prompt,
-        model: "models/rwkv-10",
+        model: modelEl.value,
         max_tokens: Number(maxTokensEl.value),
         temperature: Number(temperatureEl.value),
         top_k: Number(topKEl.value),

@@ -28,7 +28,7 @@ export async function POST({ request }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: typeof model === "string" ? model : "models/sole-source/rwkv-final",
+        model: typeof model === "string" ? model : "models/non-cite/rwkv-final",
         prompt: prompt.trim(),
         max_tokens: typeof max_tokens === "number" ? max_tokens : 1000,
         temperature: typeof temperature === "number" ? temperature : 1.0,

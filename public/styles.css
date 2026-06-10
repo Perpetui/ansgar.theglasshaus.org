@@ -449,6 +449,17 @@ button#send:disabled {
   color: var(--text-muted);
 }
 
+.intro a,
+.license a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.intro a:hover,
+.license a:hover {
+  text-decoration: underline;
+}
+
 .status {
   font-size: 0.875rem;
   color: var(--text-muted);

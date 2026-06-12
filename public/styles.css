@@ -96,7 +96,8 @@ textarea#prompt:focus {
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
-select#model {
+select#model,
+select#genrePreset {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
@@ -115,15 +116,23 @@ select#model {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-select#model:focus {
+select#model:focus,
+select#genrePreset:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
-select#model option {
+select#model option,
+select#genrePreset option {
   background: var(--surface);
   color: var(--text);
+}
+
+select#genrePreset optgroup {
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .slider-group {

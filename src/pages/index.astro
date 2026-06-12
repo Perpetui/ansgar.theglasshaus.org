@@ -132,6 +132,32 @@ const title = "RWKV Agent Interface";
         </div>
       </div>
 
+      <div class="input-group">
+        <label for="genrePreset">Genre preset</label>
+        <select id="genrePreset">
+          <option value="" selected>Custom</option>
+          <optgroup label="Creative Content Creation">
+            <option value="story">Story Creation</option>
+            <option value="poetry">Poetry / Literature</option>
+            <option value="marketing">Advertising Copy / Marketing</option>
+            <option value="freeWriting">Free Writing</option>
+          </optgroup>
+          <optgroup label="Structured Writing">
+            <option value="news">News / Articles</option>
+            <option value="papers">Papers / Research Reports</option>
+            <option value="scripts">Scripts / Dialogues</option>
+            <option value="productDesc">Product Descriptions</option>
+          </optgroup>
+          <optgroup label="Mechanical Tasks">
+            <option value="qa">Q&A / Factual Answers</option>
+            <option value="summary">Summarization / Paraphrasing</option>
+            <option value="translation">Translation</option>
+            <option value="code">Formula / Code Generation</option>
+            <option value="mcq">Multiple-choice / True or False</option>
+          </optgroup>
+        </select>
+      </div>
+
       <div class="actions">
         <button id="send" type="button">Send</button>
       </div>

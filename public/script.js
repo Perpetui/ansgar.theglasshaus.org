@@ -31,6 +31,7 @@ const frequencyPenaltyEl = getEl("frequencyPenalty");
 const frequencyPenaltyValueEl = getEl("frequencyPenaltyValue");
 const copyBtnEl = getEl("copyBtn");
 const modelEl = getEl("model");
+const genrePresetEl = getEl("genrePreset");
 
 if (maxTokensEl && maxTokensValueEl) {
   maxTokensEl.addEventListener("input", () => {
@@ -65,6 +66,55 @@ if (presencePenaltyEl && presencePenaltyValueEl) {
 if (frequencyPenaltyEl && frequencyPenaltyValueEl) {
   frequencyPenaltyEl.addEventListener("input", () => {
     frequencyPenaltyValueEl.textContent = frequencyPenaltyEl.value;
+  });
+}
+
+const genrePresets = {
+  story: { temperature: 1.3, topP: 0.8, presencePenalty: 0.4, frequencyPenalty: 0.5 },
+  poetry: { temperature: 1.8, topP: 0.9, presencePenalty: 0.3, frequencyPenalty: 0.4 },
+  marketing: { temperature: 1.2, topP: 0.7, presencePenalty: 0.5, frequencyPenalty: 0.6 },
+  freeWriting: { temperature: 1.5, topP: 0.85, presencePenalty: 0.4, frequencyPenalty: 0.5 },
+  news: { temperature: 1.1, topP: 0.6, presencePenalty: 0.3, frequencyPenalty: 0.4 },
+  papers: { temperature: 0.9, topP: 0.4, presencePenalty: 0.4, frequencyPenalty: 0.5 },
+  scripts: { temperature: 1.3, topP: 0.7, presencePenalty: 0.5, frequencyPenalty: 0.6 },
+  productDesc: { temperature: 1.0, topP: 0.5, presencePenalty: 0.3, frequencyPenalty: 0.4 },
+  qa: { temperature: 0.8, topP: 0.2, presencePenalty: 0.1, frequencyPenalty: 0.2 },
+  summary: { temperature: 1.0, topP: 0.3, presencePenalty: 0.2, frequencyPenalty: 0.3 },
+  translation: { temperature: 0.9, topP: 0.3, presencePenalty: 0.2, frequencyPenalty: 0.3 },
+  code: { temperature: 0.7, topP: 0.1, presencePenalty: 0.1, frequencyPenalty: 0.2 },
+  mcq: { temperature: 0.7, topP: 0.1, presencePenalty: 0.1, frequencyPenalty: 0.2 },
+};
+
+function applyPreset(preset) {
+  if (!preset) return;
+  if (temperatureEl && temperatureValueEl) {
+    temperatureEl.value = preset.temperature;
+    temperatureValueEl.textContent = preset.temperature;
+  }
+  if (topKEl && topKValueEl) {
+    topKEl.value = 0;
+    topKValueEl.textContent = 0;
+  }
+  if (topPEl && topPValueEl) {
+    topPEl.value = preset.topP;
+    topPValueEl.textContent = preset.topP;
+  }
+  if (presencePenaltyEl && presencePenaltyValueEl) {
+    presencePenaltyEl.value = preset.presencePenalty;
+    presencePenaltyValueEl.textContent = preset.presencePenalty;
+  }
+  if (frequencyPenaltyEl && frequencyPenaltyValueEl) {
+    frequencyPenaltyEl.value = preset.frequencyPenalty;
+    frequencyPenaltyValueEl.textContent = preset.frequencyPenalty;
+  }
+}
+
+if (genrePresetEl) {
+  genrePresetEl.addEventListener("change", () => {
+    const key = genrePresetEl.value;
+    if (key && genrePresets[key]) {
+      applyPreset(genrePresets[key]);
+    }
   });
 }
 

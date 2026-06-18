@@ -42,10 +42,10 @@ const title = "RWKV Agent Interface";
       <div class="input-group">
         <label for="model">Model</label>
         <select id="model">
-          {Array.from({ length: 52 }, (_, i) => (
-            <option value={`models/non-cite/rwkv-${i}`}>{`rwkv-${i}`}</option>
+          {Array.from({ length: 14 }, (_, i) => (
+            <option value={`models/non-cite-stop-tokens/rwkv-${i}`}>{`rwkv-${i}`}</option>
           ))}
-          <option value="models/non-cite/rwkv-final" selected>rwkv-final</option>
+          <option value="models/non-cite-stop-tokens/rwkv-final" selected>rwkv-final</option>
         </select>
       </div>
 

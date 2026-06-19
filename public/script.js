@@ -21,8 +21,6 @@ const maxTokensEl = getEl("maxTokens");
 const maxTokensValueEl = getEl("maxTokensValue");
 const temperatureEl = getEl("temperature");
 const temperatureValueEl = getEl("temperatureValue");
-const topKEl = getEl("topK");
-const topKValueEl = getEl("topKValue");
 const topPEl = getEl("topP");
 const topPValueEl = getEl("topPValue");
 const presencePenaltyEl = getEl("presencePenalty");
@@ -42,12 +40,6 @@ if (maxTokensEl && maxTokensValueEl) {
 if (temperatureEl && temperatureValueEl) {
   temperatureEl.addEventListener("input", () => {
     temperatureValueEl.textContent = temperatureEl.value;
-  });
-}
-
-if (topKEl && topKValueEl) {
-  topKEl.addEventListener("input", () => {
-    topKValueEl.textContent = topKEl.value;
   });
 }
 
@@ -90,10 +82,6 @@ function applyPreset(preset) {
   if (temperatureEl && temperatureValueEl) {
     temperatureEl.value = preset.temperature;
     temperatureValueEl.textContent = preset.temperature;
-  }
-  if (topKEl && topKValueEl) {
-    topKEl.value = 0;
-    topKValueEl.textContent = 0;
   }
   if (topPEl && topPValueEl) {
     topPEl.value = preset.topP;
@@ -182,7 +170,7 @@ function renderOutput(text) {
 }
 
 async function sendPrompt() {
-  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topKEl || !topPEl || !presencePenaltyEl || !frequencyPenaltyEl || !modelEl) {
+  if (!promptEl || !statusEl || !sendEl || !responseEl || !responseMetaEl || !maxTokensEl || !temperatureEl || !topPEl || !presencePenaltyEl || !frequencyPenaltyEl || !modelEl) {
     console.error("Required DOM elements are missing; aborting sendPrompt.");
     return;
   }
@@ -209,7 +197,6 @@ async function sendPrompt() {
         model: modelEl.value,
         max_tokens: Number(maxTokensEl.value),
         temperature: Number(temperatureEl.value),
-        top_k: Number(topKEl.value),
         top_p: Number(topPEl.value),
         alpha_presence: Number(presencePenaltyEl.value),
         alpha_frequency: Number(frequencyPenaltyEl.value),

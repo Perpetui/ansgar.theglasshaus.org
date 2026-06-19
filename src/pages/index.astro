@@ -79,19 +79,6 @@ const title = "RWKV Agent Interface";
         </div>
 
         <div class="slider-group">
-          <label for="topK">Top K</label>
-          <input
-            type="range"
-            id="topK"
-            min="0"
-            max="50"
-            step="1"
-            value="0"
-          />
-          <span class="slider-value" id="topKValue">0</span>
-        </div>
-
-        <div class="slider-group">
           <label for="topP">Top P</label>
           <input
             type="range"
@@ -212,9 +199,6 @@ const title = "RWKV Agent Interface";
 
             <dt><code>Top_P</code></dt>
             <dd>Selects the top N tokens whose cumulative probability reaches the value of P as the candidate set. For example, if set to 0.1, only the top 10% of tokens will be considered. Lower values produce higher quality but more conservative content. Setting it to 1 decreases content quality but increases diversity.</dd>
-
-            <dt><code>Top_K</code></dt>
-            <dd>Limits the candidate tokens to the K most probable ones at each step. A lower Top_K makes output more focused and deterministic, while a higher Top_K allows more variety.</dd>
 
             <dt><code>Presence Penalty</code></dt>
             <dd>Applies a fixed penalty to any token that has already appeared, encouraging the model to use new vocabulary rather than repeating words. It functions like a dynamic blacklist of prohibited words.</dd>

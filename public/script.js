@@ -38,7 +38,6 @@ const tagFormEl = getEl("tagForm");
 const tagAudienceEl = getEl("tagAudience");
 const tagKeywordsEl = getEl("tagKeywords");
 const tagKeywordsListEl = getEl("tagKeywordsList");
-const annotationModeEl = getEl("annotationMode");
 
 if (maxTokensEl && maxTokensValueEl) {
   maxTokensEl.addEventListener("input", () => {
@@ -262,7 +261,6 @@ async function sendPrompt() {
   responseMetaEl.textContent = "";
 
   const tags = collectTags();
-  const annotationMode = annotationModeEl ? annotationModeEl.value : "extract";
 
   try {
     const res = await fetch(API_URL, {
@@ -277,7 +275,6 @@ async function sendPrompt() {
         alpha_presence: Number(presencePenaltyEl.value),
         alpha_frequency: Number(frequencyPenaltyEl.value),
         ...(tags && { tags }),
-        annotation_mode: annotationMode,
       }),
     });
 

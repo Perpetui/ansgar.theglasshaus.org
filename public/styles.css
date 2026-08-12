@@ -102,8 +102,7 @@ select#tagGenre,
 select#tagSubject,
 select#tagMode,
 select#tagForm,
-select#tagAudience,
-select#annotationMode {
+select#tagAudience {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
@@ -128,8 +127,7 @@ select#tagGenre:focus,
 select#tagSubject:focus,
 select#tagMode:focus,
 select#tagForm:focus,
-select#tagAudience:focus,
-select#annotationMode:focus {
+select#tagAudience:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
@@ -141,8 +139,7 @@ select#tagGenre option,
 select#tagSubject option,
 select#tagMode option,
 select#tagForm option,
-select#tagAudience option,
-select#annotationMode option {
+select#tagAudience option {
   background: var(--surface);
   color: var(--text);
 }

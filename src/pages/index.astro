@@ -144,6 +144,60 @@ const title = "RWKV Agent Interface";
         </select>
       </div>
 
+      <section class="annotations" id="annotationsSection">
+        <h2>Annotated Labels</h2>
+        <p class="annotations-intro">Prepend metadata tags from the <a href="https://rwkv.theglasshaus.org/labels" target="_blank" rel="noopener noreferrer">annotation vocabulary</a> to guide generation.</p>
+
+        <div class="annotation-grid">
+          <div class="input-group">
+            <label for="tagGenre">Genre</label>
+            <select id="tagGenre">
+              <option value="" selected>—</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="tagSubject">Subject</label>
+            <select id="tagSubject">
+              <option value="" selected>—</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="tagMode">Mode</label>
+            <select id="tagMode">
+              <option value="" selected>—</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="tagForm">Form</label>
+            <select id="tagForm">
+              <option value="" selected>—</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="tagAudience">Audience</label>
+            <select id="tagAudience">
+              <option value="" selected>—</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="tagKeywords">Keywords</label>
+          <input
+            type="text"
+            id="tagKeywords"
+            list="tagKeywordsList"
+            placeholder="Type or select keywords from the vocabulary..."
+          />
+          <datalist id="tagKeywordsList"></datalist>
+        </div>
+
+      </section>
+
       <div class="actions">
         <button id="send" type="button">Send</button>
       </div>

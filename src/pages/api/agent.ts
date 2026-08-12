@@ -13,7 +13,7 @@ export async function POST({ request }) {
     });
   }
 
-  const { prompt, model, max_tokens, temperature, top_p, alpha_presence, alpha_frequency } = body || {};
+  const { prompt, model, max_tokens, temperature, top_p, alpha_presence, alpha_frequency, tags } = body || {};
 
   if (typeof prompt !== "string" || !prompt.trim()) {
     return new Response(JSON.stringify({ error: "Missing or empty prompt" }), {
@@ -35,6 +35,7 @@ export async function POST({ request }) {
         top_p: typeof top_p === "number" ? top_p : 0.8,
         alpha_presence: typeof alpha_presence === "number" ? alpha_presence : 0.4,
         alpha_frequency: typeof alpha_frequency === "number" ? alpha_frequency : 0.5,
+        ...(tags && typeof tags === "object" ? { tags } : {}),
       }),
     });
   } catch (err) {

@@ -43,9 +43,9 @@ const title = "RWKV Agent Interface";
         <label for="model">Model</label>
         <select id="model">
           {Array.from({ length: 30 }, (_, i) => (
-            <option value={`auth/rwkv-${i}`}>{`rwkv-${i}`}</option>
+            <option value={`aug/rwkv-${i}`}>{`rwkv-${i}`}</option>
           ))}
-          <option value="auth/rwkv-final" selected>rwkv-final</option>
+          <option value="aug/rwkv-final" selected>rwkv-final</option>
         </select>
       </div>
 

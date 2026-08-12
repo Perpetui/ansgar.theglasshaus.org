@@ -3,6 +3,7 @@
 import { marked } from "./marked.js";
 
 const API_URL = "https://rwkv.theglasshaus.org/prompt/complete";
+const LABELS_URL = "https://rwkv.theglasshaus.org/labels";
 
 function getEl(id) {
   const el = document.getElementById(id);
@@ -30,6 +31,14 @@ const frequencyPenaltyValueEl = getEl("frequencyPenaltyValue");
 const copyBtnEl = getEl("copyBtn");
 const modelEl = getEl("model");
 const genrePresetEl = getEl("genrePreset");
+const tagGenreEl = getEl("tagGenre");
+const tagSubjectEl = getEl("tagSubject");
+const tagModeEl = getEl("tagMode");
+const tagFormEl = getEl("tagForm");
+const tagAudienceEl = getEl("tagAudience");
+const tagKeywordsEl = getEl("tagKeywords");
+const tagKeywordsListEl = getEl("tagKeywordsList");
+const annotationModeEl = getEl("annotationMode");
 
 if (maxTokensEl && maxTokensValueEl) {
   maxTokensEl.addEventListener("input", () => {
@@ -104,6 +113,70 @@ if (genrePresetEl) {
       applyPreset(genrePresets[key]);
     }
   });
+}
+
+const tagSelects = {
+  genre: tagGenreEl,
+  subject: tagSubjectEl,
+  mode: tagModeEl,
+  form: tagFormEl,
+  audience: tagAudienceEl,
+};
+
+function populateTagSelect(selectEl, values) {
+  if (!selectEl || !Array.isArray(values)) return;
+  // keep the first placeholder option
+  const placeholder = selectEl.options[0];
+  selectEl.innerHTML = "";
+  if (placeholder) selectEl.appendChild(placeholder);
+  for (const value of values) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value.replace(/_/g, " ");
+    selectEl.appendChild(option);
+  }
+}
+
+function populateKeywordsDatalist(values) {
+  if (!tagKeywordsListEl || !Array.isArray(values)) return;
+  tagKeywordsListEl.innerHTML = "";
+  for (const value of values.slice(0, 500)) {
+    const option = document.createElement("option");
+    option.value = value;
+    tagKeywordsListEl.appendChild(option);
+  }
+}
+
+async function loadLabels() {
+  try {
+    const res = await fetch(LABELS_URL);
+    if (!res.ok) {
+      console.warn("Failed to load annotation labels:", res.status);
+      return;
+    }
+    const labels = await res.json();
+    for (const [key, selectEl] of Object.entries(tagSelects)) {
+      populateTagSelect(selectEl, labels[key]);
+    }
+    populateKeywordsDatalist(labels.keywords);
+  } catch (err) {
+    console.warn("Error loading annotation labels:", err);
+  }
+}
+
+loadLabels();
+
+function collectTags() {
+  const tags = {};
+  for (const [key, selectEl] of Object.entries(tagSelects)) {
+    if (selectEl && selectEl.value) {
+      tags[key] = selectEl.value;
+    }
+  }
+  if (tagKeywordsEl && tagKeywordsEl.value.trim()) {
+    tags.keywords = tagKeywordsEl.value.trim();
+  }
+  return Object.keys(tags).length > 0 ? tags : undefined;
 }
 
 async function copyToClipboard(text) {
@@ -188,6 +261,9 @@ async function sendPrompt() {
   responseEl.innerHTML = "";
   responseMetaEl.textContent = "";
 
+  const tags = collectTags();
+  const annotationMode = annotationModeEl ? annotationModeEl.value : "extract";
+
   try {
     const res = await fetch(API_URL, {
       method: "POST",
@@ -200,6 +276,8 @@ async function sendPrompt() {
         top_p: Number(topPEl.value),
         alpha_presence: Number(presencePenaltyEl.value),
         alpha_frequency: Number(frequencyPenaltyEl.value),
+        ...(tags && { tags }),
+        annotation_mode: annotationMode,
       }),
     });
 
@@ -229,8 +307,14 @@ async function sendPrompt() {
         if (!trimmed) continue;
         try {
           const parsed = JSON.parse(trimmed);
-          if (parsed && typeof parsed.chunk === "string") {
-            output += parsed.chunk;
+          const chunkText =
+            parsed && typeof parsed.chunk === "string"
+              ? parsed.chunk
+              : parsed && typeof parsed.text === "string"
+              ? parsed.text
+              : "";
+          if (chunkText) {
+            output += chunkText;
             renderOutput(output);
             updateMeta(output);
           }
@@ -245,8 +329,14 @@ async function sendPrompt() {
     if (trimmed) {
       try {
         const parsed = JSON.parse(trimmed);
-        if (parsed && typeof parsed.chunk === "string") {
-          output += parsed.chunk;
+        const chunkText =
+          parsed && typeof parsed.chunk === "string"
+            ? parsed.chunk
+            : parsed && typeof parsed.text === "string"
+            ? parsed.text
+            : "";
+        if (chunkText) {
+          output += chunkText;
           renderOutput(output);
           updateMeta(output);
         }

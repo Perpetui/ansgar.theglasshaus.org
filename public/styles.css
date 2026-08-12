@@ -97,7 +97,13 @@ textarea#prompt:focus {
 }
 
 select#model,
-select#genrePreset {
+select#genrePreset,
+select#tagGenre,
+select#tagSubject,
+select#tagMode,
+select#tagForm,
+select#tagAudience,
+select#annotationMode {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
@@ -117,14 +123,26 @@ select#genrePreset {
 }
 
 select#model:focus,
-select#genrePreset:focus {
+select#genrePreset:focus,
+select#tagGenre:focus,
+select#tagSubject:focus,
+select#tagMode:focus,
+select#tagForm:focus,
+select#tagAudience:focus,
+select#annotationMode:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 select#model option,
-select#genrePreset option {
+select#genrePreset option,
+select#tagGenre option,
+select#tagSubject option,
+select#tagMode option,
+select#tagForm option,
+select#tagAudience option,
+select#annotationMode option {
   background: var(--surface);
   color: var(--text);
 }
@@ -644,6 +662,61 @@ button#send:disabled {
   line-height: 1.5;
 }
 
+/* Annotations section */
+.annotations {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.annotations h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.annotations-intro {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: -0.5rem;
+  line-height: 1.5;
+}
+
+.annotations-intro a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.annotations-intro a:hover {
+  text-decoration: underline;
+}
+
+.annotation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+input#tagKeywords {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input#tagKeywords:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
 @media (max-width: 600px) {
   body {
     padding: 1rem;
@@ -664,5 +737,9 @@ button#send:disabled {
   .settings-tables th,
   .settings-tables td {
     padding: 0.375rem 0.5rem;
+  }
+
+  .annotation-grid {
+    grid-template-columns: 1fr;
   }
 }

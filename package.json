@@ -6,12 +6,17 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "11",
     "@astrojs/node": "^8.3.4",
     "astro": "^4.0.0",
     "marked": "^18.0.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.103.0"
   }
 }
